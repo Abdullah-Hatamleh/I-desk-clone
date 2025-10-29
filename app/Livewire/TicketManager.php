@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Ticket;
 use Livewire\Component;
 
 class TicketManager extends Component
@@ -12,6 +13,6 @@ class TicketManager extends Component
     }
     public function render()
     {
-        return view('livewire.ticket-manager');
+        return view('livewire.ticket-manager', ['tickets' => Ticket::with('category')->get()]);
     }
 }
