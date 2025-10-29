@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Category;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -14,12 +15,21 @@ return new class extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
-            $table->string('issue');
-            $table->string('description');
+            $table->string('country')->nullable();
+            $table->string('comment')->nullable();
             $table->enum('priority', ['high','low','medium','critical']);
             $table->enum('state',['closed','open','in-progress']);
-            $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Category::class)->constrained();
             $table->timestamps();
+            $table->string('customer_name')->nullable();
+            $table->string('customer_number')->nullable();
+            $table->string('customer_email')->nullable();
+            $table->enum('site', ['Madina', 'University','irbid']);
+            $table->integer('phone');
+            $table->string('customer_id');
+            $table->string('anydesk_id');
+            $table->json('issues');
+            $table->string('attachment')->nullable();
         });
     }
 
