@@ -21,6 +21,7 @@ class TicketCreation extends Component
     public $thirdCats = [];
 
     //Form priorities to submit and create a ticket
+
     public $thirdCategory = null;
     public $priority = '';
     public $country = '';
@@ -60,7 +61,7 @@ class TicketCreation extends Component
 
     }
 
-    public function testForm() {
+    public function test() {
         //  $this->dispatch('log-message', message: 'issues are' . $this->issues);
         dd([
             $this
@@ -96,7 +97,7 @@ class TicketCreation extends Component
         ]);
             $this->reset();
         session()->flash('success', 'Ticket created successfully!');
-        $this->js("alert('Post saved!')");
+        // $this->js("alert('Post saved!')"); //Old confirmation
         } catch (\Exception $error) {
             dd($error);
         }

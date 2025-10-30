@@ -18,7 +18,7 @@
                         </div>
                         <div class="col-4">
                             <div class=" d-flex justify-content-end">
-                                <div class="mx-2 mt-10 center" style="cursor: pointer">
+                                <div class="mx-2 mt-10 center" style="cursor: pointer" wire:click="refreshTickets">
                                     <img id="col_img" class="tw-p-[10px] b-white tw-rounded-[10px] shadow"
                                         src="{{ asset('Vector12.png') }}" alt="mdo" width="45" height="45">
                                 </div>
@@ -59,8 +59,10 @@
                             <tbody class="table-body-style">
                                 {{-- example ticket for later filling --}}
                                 @foreach ($tickets as $ticket)
-                                    <tr wire:click="goTo('ticket','11999')" style="opacity: 1;cursor: pointer">
-
+                                    <tr style="opacity: 1;cursor: pointer"
+                                        @if ($ticket->attachment) onclick="window.open('{{ Storage::url($ticket->attachment) }}', '_blank')"
+    @else
+        onclick="alert('No attachment for this ticket.')" @endif>
 
                                         <td scope="row" class="text-center checked"
                                             style="background: white !important;">
@@ -72,13 +74,18 @@
 
 
                                         <td class="px-3 txt_cen" style="white-space: nowrap;">
-                                            <img id="col_img" class="mr-10 "
-                                                src="https://development.extensyaidesk.com/tenancy/assets/img/user.png"
-                                                alt="mdo" width="25" height="25">
+                                            @if ($ticket->customer_name)
+                                                <img id="col_img" class="mr-10 " src="{{ asset('user.png') }}"
+                                                    alt="mdo" width="25" height="25">
 
-                                            <span>
-                                                {{ $ticket['customer_name'] }}
-                                            </span>
+                                                <span>
+                                                    {{ $ticket['customer_name'] }}
+                                                </span>
+                                            @else
+                                                <span class="text-secondary">
+                                                    Not Available
+                                                </span>
+                                            @endif
                                         </td>
                                         <td class="px-3 txt_cen" style="white-space: nowrap;">
                                             {{ $ticket->category->parent->name }}
@@ -87,8 +94,7 @@
                                             1
                                         </td>
                                         <td class="px-3 txt_cen" style="white-space: nowrap;">
-                                            <img id="col_img" class="mr-10"
-                                                src="https://development.extensyaidesk.com/tenancy/assets/img/assigment.png"
+                                            <img id="col_img" class="mr-10" src="{{ asset('assigment.png') }}"
                                                 alt="mdo" width="20" height="20">
 
 
@@ -106,8 +112,8 @@
                                                 style="color: {{ match ($ticket->priority) {
                                                     'critical' => 'red',
                                                     'high' => 'orange',
-                                                    'medium' => 'yellow',
-                                                    default => 'green',
+                                                    'medium' => 'green',
+                                                    default => 'gray',
                                                 } }}">
                                                 {{ $ticket->priority }}
                                             </span>

@@ -5,7 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel</title>
+    <title>{{ config('app.name') }}</title>
+    <link rel="shortcut icon" href="{{ asset('logo.png') }}" type="image/x-icon">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -20,7 +21,7 @@
 <body class="font-sans antialiased">
     @livewire('main-content')
     @livewireScripts
-
+    @stack('scripts')
 </body>
 
 
